@@ -10,6 +10,7 @@ When we will meet again, we will go through the code together and look at how th
 
 Feel free to get creative and come up with something cool beyond what's defined by the assignment if you want to impress us (we're sure you will! 🚀)
 
+Bonus points if you can configure the tests to run on a CI provider of your choice.
 
 ## Prerequisites
 
