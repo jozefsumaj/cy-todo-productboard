@@ -1,3 +1,5 @@
+![E2E Tests](https://github.com/jozefsumaj/cy-todo-productboard/workflows/E2E%20Tests/badge.svg)
+
 <p align="center">
 <img height="40" src="https://www.productboard.com/wp-content/themes/productboard_rebrand/public/img/productboard-logo.svg">
 </p>
