@@ -10,4 +10,8 @@
 // You can read more about custom commands here:
 // https://on.cypress.io/commands
 // ***********************************************
-
+Cypress.Commands.add('addTodosLocalStorage', () => {
+    cy.fixture('todos').then(todos => {
+        window.localStorage.setItem('react-todos', JSON.stringify(todos))
+    })
+})
