@@ -7,18 +7,48 @@
 // check this file using TypeScript if available
 // @ts-check
 describe('Layout', () => {
-  before(() => {
-    cy.visit('/');
+ 
+  describe('First access with no data', () => {
+    before(() => {
+      cy.visit('/')
+    })
+
+    it('Shows app header', () => {
+      cy.get('h1').contains('todos')
+    })
+
+    it('Focuses to todo input', () => {
+      cy.get('.new-todo').should('be.focused')
+    })
+
+    it('Shows edit help text', () => {
+      cy.contains('Double-click to edit a todo')
+    })
   });
-  it('Shows app header', () => {
 
-  })
-  it('Focuses to todo input', () => {
+  describe('With todos data', () => {
+    before(() => {
+      cy.addTodosLocalStorage() // also stores todos to @todos alias
+      cy.visit('/')
+    })
 
-  })
-  it('Shows help text', () => {
+    it('Shows todos', function () {
+      cy.log(`There should be ${this.todos.length} todos`)
+      cy.get('.todo-list').find('li').should('have.length', 3)
+    })
 
-  })
+    it('Shows navigation', () => {
+      cy.contains('All')
+      cy.contains('Active')
+      cy.contains('Completed')
+      cy.contains('Clear completed')
+      cy.get('a[href="#/"]').should('have.class','selected')
+    })
+
+    it('Shows how many todos items are left', () => {
+      cy.contains('1 item left')
+    })
+  });
 })
 
 describe('Working with todos', () => {

@@ -11,7 +11,7 @@
 // https://on.cypress.io/commands
 // ***********************************************
 Cypress.Commands.add('addTodosLocalStorage', () => {
-    cy.fixture('todos').then(todos => {
+    cy.fixture('todos').as('todos').then(todos => {
         window.localStorage.setItem('react-todos', JSON.stringify(todos))
     })
 })
