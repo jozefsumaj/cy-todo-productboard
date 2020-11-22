@@ -1,4 +1,4 @@
-![E2E Tests](https://github.com/jozefsumaj/cy-todo-productboard/workflows/E2E%20Tests/badge.svg)
+[![E2E Tests](https://github.com/jozefsumaj/cy-todo-productboard/workflows/E2E%20Tests/badge.svg)](https://github.com/jozefsumaj/cy-todo-productboard/actions?query=workflow%3A%22E2E+Tests%22)
 
 <p align="center">
 <img height="40" src="https://www.productboard.com/wp-content/themes/productboard_rebrand/public/img/productboard-logo.svg">
