@@ -1,0 +1,13 @@
+version: '3.2'
+services:
+  todo-app:
+    build: app/.
+  cypress:
+    image: "cypress/included:5.6.0"
+    depends_on:
+      - todo-app
+    environment:
+      - CYPRESS_baseUrl=http://todo-app:8888
+    working_dir: /tests
+    volumes:
+      - $PWD/tests/:/tests
