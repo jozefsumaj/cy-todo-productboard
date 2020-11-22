@@ -1,17 +1,18 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create the custom commands: 'createDefaultTodos'
-// and 'createTodo'.
-//
-// The commands.js file is a great place to
-// modify existing commands and create custom
-// commands for use throughout your tests.
-//
-// You can read more about custom commands here:
-// https://on.cypress.io/commands
-// ***********************************************
-Cypress.Commands.add('addTodosLocalStorage', () => {
-    cy.fixture('todos').as('todos').then(todos => {
-        window.localStorage.setItem('react-todos', JSON.stringify(todos))
+Cypress.Commands.add('addTodosViaLocalStorage', function () {
+  cy.fixture('todos')
+    .as('todos')
+    .then(todos => {
+      window.localStorage.setItem('react-todos', JSON.stringify(todos))
+    })
+})
+
+Cypress.Commands.add('addTodoViaUI', function (title, completed) {
+  cy.get('.new-todo')
+    .type(`${title}{Enter}`)
+    .then(function () {
+      if(completed) 
+        cy.get('.todo-list')
+          .contains(title)
+          .get('.toggle').click();
     })
 })
