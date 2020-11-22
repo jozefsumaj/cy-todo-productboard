@@ -1,4 +1,4 @@
-[![gitlab pipeline status](https://gitlab.com/jozefsumaj/cy-todo-productboard/badges/run-in-docker-compose/pipeline.svg)](https://gitlab.com/jozefsumaj/cy-todo-productboard/-/commits/run-in-docker-compose)
+[![gitlab pipeline status](https://gitlab.com/jozefsumaj/cy-todo-productboard/badges/run-in-docker-compose/pipeline.svg)](https://gitlab.com/jozefsumaj/cy-todo-productboard/-/jobs)
 
 <p align="center">
 <img height="40" src="https://www.productboard.com/wp-content/themes/productboard_rebrand/public/img/productboard-logo.svg">
