@@ -7,8 +7,7 @@
 // check this file using TypeScript if available
 // @ts-check
 
-describe('Layout', () => {
- 
+describe('Layout', () => { 
   describe('First access with no data', () => {
     before(() => {
       cy.visit('/')
@@ -25,7 +24,7 @@ describe('Layout', () => {
     it('Shows edit help text', () => {
       cy.contains('Double-click to edit a todo')
     })
-  });
+  })
 
   describe('With todos data', () => {
     before(() => {
@@ -49,15 +48,14 @@ describe('Layout', () => {
     it('Shows how many todos items are left', () => {
       cy.contains('2 items left')
     })
-  });
+  })
 })
 
 describe('Working with todos', () => {
-
   beforeEach(() => {
     cy.visit('/');
     cy.fixture('todos').as('todos')
-  });
+  })
   
   describe('Create todos', () => {
     it('Allows to add plain todo', function () {
@@ -98,19 +96,37 @@ describe('Working with todos', () => {
 
   describe('Update todos', () => {
     it('Allows to edit active todo', () => {
-
+      cy.addTodoViaUI("Prepare lunch", false)
+        .as('todo')
+      cy.get('@todo')
+        .dblclick()
+      cy.get('.edit')
+        .type(' - Today!{Enter}')
+      cy.get('@todo')
+        .should('have.text','Prepare lunch - Today!')
     })
 
     it('Allows to edit completed todo', () => {
-
+      cy.addTodoViaUI("Go for a run", true)
+        .as('todo')
+      cy.visit('#/completed')
+      cy.get('@todo')
+        .dblclick()
+      cy.get('.edit')
+        .type(' - at least 5km{Enter}')
+      cy.get('@todo')
+        .should('have.text','Go for a run - at least 5km')
     })
 
     it('Allows to cancel edit action', () => {
-  
-    })
-
-    it('Allows to remove todo by editing', () => {
-  
+      cy.addTodoViaUI("Read a book", false)
+        .as('todo')
+      cy.get('@todo')
+        .dblclick()
+      cy.get('.edit')
+        .type(' - Radical Candor{Esc}')
+      cy.get('@todo')
+        .should('have.text','Read a book')
     })
   })
 
@@ -121,6 +137,18 @@ describe('Working with todos', () => {
 
     it('Allows to remove completed todo', () => {
   
+    })
+
+    it('Allows to remove todo by editing', () => {
+      cy.addTodoViaUI("Plan a trip with friends", false)
+        .as('todo')
+      cy.get('@todo')
+        .dblclick()
+      cy.get('.edit')
+        .clear()
+        .type('{Enter}')
+      cy.get('@todo')
+        .should('not.be.visible')
     })
 
     it('Allows to bulk remove completed todos ', () => {
