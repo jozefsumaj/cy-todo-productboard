@@ -9,10 +9,15 @@ Cypress.Commands.add('addTodosViaLocalStorage', function () {
 Cypress.Commands.add('addTodoViaUI', function (title, completed) {
   cy.get('.new-todo')
     .type(`${title}{Enter}`)
-    .then(function () {
-      if(completed) 
-        cy.get('.todo-list')
-          .contains(title)
-          .get('.toggle').click();
+    
+  cy.get('.todo-list')
+    .contains(title)
+    .then(function($todoItem) {
+      if(completed)
+        cy.wrap($todoItem)
+          .get('.toggle')
+          .click()
+
+        cy.get($todoItem) //get newly created todo so it can be aliased in specs
     })
 })

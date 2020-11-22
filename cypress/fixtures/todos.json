@@ -4,14 +4,14 @@
     "title": "Walk the dog", 
     "completed": true
   },
-  {
-    "id": "2a643ef9-80d1-4027-8865-1b36a15e6919", 
-    "title": "Feed the cat", 
-    "completed": true
-  },
   {  
     "id": "2a643ef9-80d1-4027-8865-1b36a15e6920", 
     "title": "Complete the Productboard assignment!", 
+    "completed": false
+  },
+  {  
+    "id": "2a643ef9-80d1-4027-8865-1b36a15e6921", 
+    "title": "いろはにほへとちりぬるを ٩(͡๏̯͡๏)۶", 
     "completed": false
   }
 ]

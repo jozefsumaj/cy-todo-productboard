@@ -6,6 +6,7 @@
 
 // check this file using TypeScript if available
 // @ts-check
+
 describe('Layout', () => {
  
   describe('First access with no data', () => {
@@ -46,32 +47,45 @@ describe('Layout', () => {
     })
 
     it('Shows how many todos items are left', () => {
-      cy.contains('1 item left')
+      cy.contains('2 items left')
     })
   });
 })
 
 describe('Working with todos', () => {
-  before(() => {
-    cy.fixture('todos').as('todos')
-  })
 
   beforeEach(() => {
     cy.visit('/');
+    cy.fixture('todos').as('todos')
   });
   
   describe('Create todos', () => {
     it('Allows to add plain todo', function () {
-      cy.get('.new-todo')
-        .type(`${this.todos[0].title} {Enter}`)
-      cy.get('.todo-list')
-        .find('li')
-        .should('have.length', 1)
-        .should('have.text', `${this.todos[0].title}`)
+      cy.get('@todos').then((todos) => {
+
+        const plainTodoTitle = todos[0].title;
+
+        cy.addTodoViaUI(plainTodoTitle, false)
+          .as('plainTodo')
+
+        cy.get('@plainTodo')
+          .should('have.length', 1)
+          .should('have.text', `${plainTodoTitle}`)
+      })
     })
 
-    it('Allows to add unicode todo', () => {
-  
+    it('Allows to add unicode todo', function () {
+      cy.get('@todos').then((todos) => {
+
+        const unicodeTodoTitle = todos[2].title;
+
+        cy.addTodoViaUI(unicodeTodoTitle, false)
+          .as('unicodeTodo')
+
+        cy.get('@unicodeTodo')
+          .should('have.length', 1)
+          .should('have.text', `${unicodeTodoTitle}`)
+      })  
     })
 
     it('Doesn\'t allow to add empty todo', () => {
