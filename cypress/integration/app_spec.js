@@ -24,6 +24,10 @@ describe('Layout', () => {
     it('Shows edit help text', () => {
       cy.contains('Double-click to edit a todo')
     })
+
+    it('Doesn`t show clear completed todos option', () => {
+      cy.get('.clear-completed').should('not.be','visible')
+    })
   })
 
   describe('With todos data', () => {
@@ -34,7 +38,9 @@ describe('Layout', () => {
 
     it('Shows todos', function () {
       cy.log(`There should be ${this.todos.length} todos`)
-      cy.get('.todo-list').find('li').should('have.length', 3)
+      cy.get('.todo-list')
+        .find('li')
+        .should('have.length', 3)
     })
 
     it('Shows navigation', () => {
@@ -58,17 +64,30 @@ describe('Working with todos', () => {
   })
   
   describe('Create todos', () => {
-    it('Allows to add plain todo', function () {
+    it('Allows to add new todo', function () {
       cy.get('@todos').then((todos) => {
 
         const plainTodoTitle = todos[0].title;
 
         cy.addTodoViaUI(plainTodoTitle, false)
           .as('plainTodo')
-
         cy.get('@plainTodo')
           .should('have.length', 1)
           .should('have.text', `${plainTodoTitle}`)
+        
+        // should appear under active
+        cy.get('a[href="#/active"]')
+          .click()
+        cy.get('.todo-list')
+          .find('li')
+          .eq(0)
+          .should('have.text', `${plainTodoTitle}`)
+          
+        // should not appear under completed yet
+        cy.get('a[href="#/completed"]')
+          .click()
+        cy.get('.todo-list')
+          .should('not.be.visible')
       })
     })
 
@@ -104,6 +123,19 @@ describe('Working with todos', () => {
   })
 
   describe('Update todos', () => {
+    it('Allows to mark todos as completed', () =>{
+      cy.addTodoViaUI("Buy groceries", false)
+        .get('.toggle')
+        .click()
+        .closest('.completed')
+        .should('be.visible')
+        // toggle again to un-complete
+        .get('.toggle')
+        .click()
+        .closest('li')
+        .should('not.have.class','completed')
+    })
+
     it('Allows to edit active todo', () => {
       cy.addTodoViaUI("Prepare lunch", false)
         .as('todo')
@@ -140,12 +172,11 @@ describe('Working with todos', () => {
   })
 
   describe('Remove todos', () => {
-    it('Allows to remove active todo', () => {
-  
-    })
-
     it('Allows to remove completed todo', () => {
-  
+      cy.addTodoViaUI("Buy some coffee", true)
+      cy.get('a[href="#/completed"]')
+        .click()
+      cy.deleteTodoViaUI('Buy some coffee')
     })
 
     it('Allows to remove todo by editing', () => {
@@ -161,7 +192,11 @@ describe('Working with todos', () => {
     })
 
     it('Allows to bulk remove completed todos ', () => {
-  
+      cy.addTodoViaUI("Buy some coffee", true)
+      cy.get('.clear-completed')
+        .click()
+      cy.get('.todo-list')
+        .should('not.be.visible')
     })
   })
 })
