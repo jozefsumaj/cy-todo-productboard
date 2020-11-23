@@ -92,6 +92,15 @@ describe('Working with todos', () => {
       cy.get('.todo-list')
         .should('not.exist')
     })
+
+    it('Increases and decreases todo counter', () => {
+      cy.addTodoViaUI("First todo", false)
+      cy.contains('1 item left')
+      cy.addTodoViaUI("Second todo", false)
+      cy.contains('2 items left')
+      cy.deleteTodoViaUI("Second todo")
+      cy.contains('1 item left')
+    })
   })
 
   describe('Update todos', () => {

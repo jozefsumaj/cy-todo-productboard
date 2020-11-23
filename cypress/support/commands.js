@@ -21,3 +21,10 @@ Cypress.Commands.add('addTodoViaUI', function (title, completed) {
         cy.get($todoItem) //get newly created todo so it can be aliased in specs
     })
 })
+
+Cypress.Commands.add('deleteTodoViaUI', function (title) {   
+  cy.get('.todo-list')
+    .contains(title)
+    .siblings('.destroy')
+    .click({ force: true })
+})

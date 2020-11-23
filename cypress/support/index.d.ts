@@ -15,5 +15,11 @@ declare namespace Cypress {
          * cy.addTodoViaUI('Feed the cat', false).as(newTodo)
          */
         addTodoViaUI(title: string, completed: boolean): Chainable<any>
+        /**
+         * Removes todo by clicking on delete button
+         * @example
+         * cy.deleteTodoViaUI('Feed the cat')
+         */
+        deleteTodoViaUI(title: string): Chainable<any>
     }
 }
